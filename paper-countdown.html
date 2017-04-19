@@ -1,0 +1,93 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+
+<dom-module id="paper-countdown">
+    <template>
+
+        <style>
+
+        </style>
+
+        <div>
+            [[daysLeft]] [[hoursLeft]] [[minutesLeft]] [[secondsLeft]]
+        </div>
+
+
+    </template>
+
+    <script>
+
+        class PaperCountdown extends Polymer.Element {
+
+            static get is() {
+                return 'paper-countdown'
+            }
+
+            static get config() {
+                return {
+                    properties: {
+                        second: {
+                            type: String,
+                            observer: 'secondChanged'
+                        },
+                        minute: {
+                            type: String,
+                            observer: 'minuteChanged'
+                        },
+                        day: {
+                            type: String,
+                            observer: 'dayChanged'
+                        },
+                        month: {
+                            type: String,
+                            observer: 'monthChanged'
+                        },
+                        year: {
+                            type: String,
+                            observer: 'yearChanged'
+                        },
+                        secondsLeft: {
+                            type: String
+                        },
+                        minutesLeft: {
+                            type: String
+                        },
+                        daysLeft: {
+                            type: String
+                        },
+                        monthsLeft: {
+                            type: String
+                        },
+                        yearsLeft: {
+                            type: String
+                        }
+                    },
+                    observers: [
+                        //observers as in Polymer 1.0
+                    ]
+                }
+            }
+
+            connectedCallback() {
+                setInterval(function () {
+                    this._caluclateDiff();
+                }.bind(this), 1000);
+
+            }
+
+            _caluclateDiff() {
+                let startDate = new Date();
+                let targetDate = new Date(this.year, this.month, this.day, this.hour, this.minute, this.second);
+                let timeDiffInSeconds = Math.abs(targetDate.getTime() - startDate.getTime());
+                this.daysLeft = Math.floor(timeDiffInSeconds / 86400);
+                this.hoursLeft = Math.floor((timeDiffInSeconds % 86400) / 3600);
+                this.minutesLeft = Math.floor(((timeDiffInSeconds % 86400) % 3600) / 60);
+                this.secondsLeft = ((timeDiffInSeconds % 86400) % 3600) % 60;
+                console.info( this.daysLeft + " days " + this.hoursLeft + " hours " + this.minutesLeft + " minutes " + this.secondsLeft + " seconds");
+
+            }
+        }
+        // Register custom element definition using standard platform API
+        customElements.define(PaperCountdown.is, PaperCountdown);
+
+    </script>
+</dom-module>
