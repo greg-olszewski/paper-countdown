@@ -1,0 +1,9 @@
+{
+  "name": "paper-countdown",
+  "private": false,
+  "author": "Grzegorz Olszewski <grzegorz@olszewski.in>",
+  "license": "Apache 2.0",
+  "dependencies": {
+    "polymer": "Polymer/polymer#2.0-preview"
+  }
+}
